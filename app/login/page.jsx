@@ -92,9 +92,9 @@ export default function LoginPage() {
                     <span>Manager</span>
                   </button>
                   <button
-                    onClick={() => setSelectedRole('Employee')}
+                    onClick={() => setSelectedRole('EMPLOYEE')}
                     className={`flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg font-semibold transition-all duration-200 ${
-                      selectedRole === 'Employee'
+                      selectedRole === 'EMPLOYEE'
                         ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md transform scale-[1.02]'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
                     }`}

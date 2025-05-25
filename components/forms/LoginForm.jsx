@@ -62,7 +62,7 @@ const LoginForm = ({ selectedRole = 'MANAGER' }) => {
         </div>
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
         <p className="text-gray-600">
-          Sign in as {selectedRole === 'MANAGER' ? 'MANAGER' : 'Employee'}
+          Sign in as {selectedRole === 'MANAGER' ? 'MANAGER' : 'EMPLOYEE'}
         </p>
       </div>
 
@@ -152,7 +152,7 @@ const LoginForm = ({ selectedRole = 'MANAGER' }) => {
               <span>Signing in...</span>
             </div>
           ) : (
-            `Sign In as ${selectedRole === 'MANAGER' ? 'Manager' : 'Employee'}`
+            `Sign In as ${selectedRole === 'MANAGER' ? 'MANAGER' : 'EMPLOYEE'}`
           )}
         </Button>
       </form>
