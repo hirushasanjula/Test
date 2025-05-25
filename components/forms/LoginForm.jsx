@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Mail, Lock, Eye, EyeOff, User, Building2 } from 'lucide-react';
 
-const LoginForm = ({ selectedRole = 'manager' }) => {
+const LoginForm = ({ selectedRole = 'MANAGER' }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -32,7 +32,7 @@ const LoginForm = ({ selectedRole = 'manager' }) => {
       if (result?.error) {
         setErrors({ submit: 'Invalid email or password' });
       } else {
-        const redirectPath = selectedRole === 'manager' ? '/dashboard' : '/dashboard';
+        const redirectPath = selectedRole === 'MANAGER' ? '/dashboard' : '/dashboard';
         router.push(redirectPath);
       }
     } catch (error) {
@@ -54,7 +54,7 @@ const LoginForm = ({ selectedRole = 'manager' }) => {
       {/* Header Section */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
-          {selectedRole === 'manager' ? (
+          {selectedRole === 'MANAGER' ? (
             <Building2 className="h-8 w-8 text-white" />
           ) : (
             <User className="h-8 w-8 text-white" />
@@ -62,7 +62,7 @@ const LoginForm = ({ selectedRole = 'manager' }) => {
         </div>
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
         <p className="text-gray-600">
-          Sign in as {selectedRole === 'manager' ? 'Manager' : 'Employee'}
+          Sign in as {selectedRole === 'MANAGER' ? 'MANAGER' : 'Employee'}
         </p>
       </div>
 
@@ -152,7 +152,7 @@ const LoginForm = ({ selectedRole = 'manager' }) => {
               <span>Signing in...</span>
             </div>
           ) : (
-            `Sign In as ${selectedRole === 'manager' ? 'Manager' : 'Employee'}`
+            `Sign In as ${selectedRole === 'MANAGER' ? 'Manager' : 'Employee'}`
           )}
         </Button>
       </form>
