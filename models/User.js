@@ -46,21 +46,32 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {
-    return next()
+    console.log("UserSchema: Password not modified, skipping hash");
+    return next();
   }
-  
   try {
-    const salt = await bcrypt.genSalt(12)
-    this.password = await bcrypt.hash(this.password, salt)
-    next()
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    console.log("UserSchema: Password hashed:", {
+      original: this.password,
+      hashed: this.password,
+    });
+    next();
   } catch (error) {
-    next(error)
+    console.error("UserSchema: Hashing error:", error);
+    next(error);
   }
-})
+});
 
 UserSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password)
-}
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  console.log("UserSchema: Compare password:", {
+    candidatePassword,
+    storedPassword: this.password,
+    isMatch,
+  });
+  return isMatch;
+};
 
 UserSchema.methods.toJSON = function() {
   const userObject = this.toObject()
