@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { connectDB } from '@/lib/db';
 import User from '@/models/User';
-import bcrypt from 'bcryptjs';
 
 export async function GET(request) {
   try {
@@ -60,11 +59,10 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    console.log("API: Password hashed:", { password, hashedPassword });
+    // Remove manual hashing - let the User model's pre('save') middleware handle it
     const user = await User.create({
       email,
-      password: hashedPassword,
+      password, // Pass the plain password - it will be hashed by the pre('save') middleware
       name,
       role,
       companyId,
