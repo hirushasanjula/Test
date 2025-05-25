@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -15,15 +15,6 @@ const LoginForm = ({ selectedRole = 'MANAGER' }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const { data: session, status } = useSession();
-
-  // Redirect if already logged in
-  useEffect(() => {
-    if (status === 'authenticated' && session) {
-      console.log('User already authenticated, redirecting...', session);
-      router.push('/dashboard');
-    }
-  }, [session, status, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,11 +22,6 @@ const LoginForm = ({ selectedRole = 'MANAGER' }) => {
     setErrors({});
 
     try {
-      console.log('Attempting sign in with:', { 
-        email: formData.email, 
-        role: selectedRole 
-      });
-
       const result = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
@@ -43,23 +29,13 @@ const LoginForm = ({ selectedRole = 'MANAGER' }) => {
         redirect: false,
       });
 
-      console.log('Sign in result:', result);
-
       if (result?.error) {
-        console.error('Sign in error:', result.error);
         setErrors({ submit: 'Invalid email or password' });
-      } else if (result?.ok) {
-        console.log('Sign in successful, redirecting...');
-        
-        // Wait a moment for session to update
-        setTimeout(() => {
-          const redirectPath = selectedRole === 'MANAGER' ? '/dashboard' : '/dashboard';
-          router.push(redirectPath);
-          router.refresh(); // Force a refresh to ensure session is loaded
-        }, 100);
+      } else {
+        const redirectPath = selectedRole === 'MANAGER' ? '/dashboard' : '/dashboard';
+        router.push(redirectPath);
       }
     } catch (error) {
-      console.error('Login error:', error);
       setErrors({ submit: 'An error occurred. Please try again.' });
     } finally {
       setLoading(false);
@@ -73,29 +49,8 @@ const LoginForm = ({ selectedRole = 'MANAGER' }) => {
     });
   };
 
-  // Show loading if checking session
-  if (status === 'loading') {
-    return (
-      <div className="w-full max-w-md mx-auto">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500 border-t-transparent mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="w-full max-w-md mx-auto">
-      {/* Debug info - remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
-          <div>Status: {status}</div>
-          <div>Session: {session ? 'Yes' : 'No'}</div>
-          {session && <div>User: {session.user?.email}</div>}
-        </div>
-      )}
-
       {/* Header Section */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
