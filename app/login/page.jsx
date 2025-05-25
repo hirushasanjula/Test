@@ -7,7 +7,7 @@ import { Building2, Users, Clock, ArrowRight } from 'lucide-react'
 import { RiAdminLine } from "react-icons/ri";
 
 export default function LoginPage() {
-  const [selectedRole, setSelectedRole] = useState('manager')
+  const [selectedRole, setSelectedRole] = useState('MANAGER')
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
@@ -81,9 +81,9 @@ export default function LoginPage() {
                 <h3 className="text-sm font-semibold text-gray-700 mb-4 text-center">Choose your role</h3>
                 <div className="flex space-x-2 bg-gray-100 rounded-xl p-1">
                   <button
-                    onClick={() => setSelectedRole('manager')}
+                    onClick={() => setSelectedRole('MANAGER')}
                     className={`flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg font-semibold transition-all duration-200 ${
-                      selectedRole === 'manager'
+                      selectedRole === 'MANAGER'
                         ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md transform scale-[1.02]'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
                     }`}
@@ -92,9 +92,9 @@ export default function LoginPage() {
                     <span>Manager</span>
                   </button>
                   <button
-                    onClick={() => setSelectedRole('employee')}
+                    onClick={() => setSelectedRole('Employee')}
                     className={`flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg font-semibold transition-all duration-200 ${
-                      selectedRole === 'employee'
+                      selectedRole === 'Employee'
                         ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md transform scale-[1.02]'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
                     }`}
@@ -111,7 +111,7 @@ export default function LoginPage() {
             
             {/* Footer Links */}
             <div className="mt-8 text-center">
-              {selectedRole === 'manager' ? (
+              {selectedRole === 'MANAGER' ? (
                 <Link 
                   href="/register"
                   className="group inline-flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors duration-200"
